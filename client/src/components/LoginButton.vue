@@ -40,7 +40,7 @@ export default {
           const token = this.$cookies.get("auth-token");
           if (token) {
             clearInterval(interval);
-            this.$router.push("/chat");
+            location.href = "/chat";
           }
         }, 1000);
       }

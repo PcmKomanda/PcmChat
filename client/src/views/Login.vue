@@ -6,9 +6,10 @@ export default {
     loading() {
       if (this.loading) {
         setInterval(() => {
-          const token = localStorage.getItem("auth-token");
+          const token = this.$cookies.get("auth-token");
+
           if (token) {
-            this.$router.push("/chat");
+            location.href = "/chat";
           }
         }, 1000);
       }

@@ -56,15 +56,32 @@ export default {
     <div class="flex w-full h-full flex-row p-2 overflow-y-scroll bg-base-200">
       <div class="flex-grow" v-if="this.guild._id">
         <div
-          v-for="member in this.members.filter((m) =>
-            channel.privacy === 'private'
-              ? guild.moderators.includes(m._id) || guild.owner == m._id
-              : true
-          )"
+          v-for="member in this.members
+            .filter((m) =>
+              channel.privacy === 'private'
+                ? guild.moderators.includes(m._id) || guild.owner == m._id
+                : true
+            )
+            .sort((a, b) => {
+              a = a.status.type;
+              b = b.status.type;
+              if (a === 'online') return -1;
+              if (a === 'idle' && b !== 'online') return -1;
+              if (a === 'dnd' && b !== 'online' && b !== 'idle') return -1;
+              return 1;
+            })"
           :key="member._id"
           class="w-full text-xl flex my-2"
         >
-          <div class="avatar status" :class="member.status.type">
+          <div
+            class="avatar status"
+            :class="
+              member.status.type === 'invisible' ||
+              member.status.type === 'offline'
+                ? 'invis'
+                : member.status.type
+            "
+          >
             <div class="rounded-full w-12 h-12 bg-base-200">
               <img
                 class="rounded-full w-12 h-12"

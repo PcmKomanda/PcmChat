@@ -25,9 +25,9 @@ export default {
 <template>
   <div class="flex w-full h-16 bg-base-300 m-0 p-0 z-30">
     <div
-      class="flex dropdown dropdown-top w-full h-16 hover:bg-base-200 duration-200 cursor-pointer mr-4"
+      class="flex dropdown dropdown-top w-[90%] h-16 hover:bg-base-200 duration-200 cursor-pointer"
     >
-      <label tabindex="0" class="flex w-full">
+      <label tabindex="0" class="flex w-[90%]">
         <div class="w-16 md:w-14 my-2 mx-2 flex">
           <div
             class="avatar status"
@@ -39,8 +39,8 @@ export default {
             <img :data-src="user.avatar" class="rounded-full" />
           </div>
         </div>
-        <div class="w-full inline-flex">
-          <div class="text-center my-auto text-lg xl:text-xl 2xl:text-2xl">
+        <div class="w-[75%] inline-flex">
+          <div class="text-center my-auto text-lg xl:text-xl truncate">
             {{ user.display_name }}
           </div>
         </div>
@@ -49,7 +49,7 @@ export default {
         tabindex="0"
         class="dropdown-content menu p-4 shadow bg-base-200 rounded-box w-full m-2"
       >
-        <span class="cursor-default text-4xl">
+        <span class="cursor-default text-2xl text-center">
           <span>{{ user.display_name }}</span>
         </span>
         <div class="divider my-1"></div>
@@ -64,7 +64,7 @@ export default {
       </ul>
     </div>
     <div
-      class="my-auto text-xl ml-auto pr-2 hover:text-blue-300 duration-1000 cursor-pointer"
+      class="my-auto text-xl pr-2 hover:text-blue-300 duration-1000 cursor-pointer"
     >
       <i class="fa-solid fa-right-from-bracket" @click="logout"></i>
     </div>

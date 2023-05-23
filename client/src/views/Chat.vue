@@ -65,7 +65,6 @@ export default {
 <template>
   <KeepAlive>
     <div v-if="user._id" class="min-h-screen max-h-screen overflow-hidden">
-      <!-- <NavBar :user="user" @openModal="loadModal" @fetchUser="fetchUser" /> -->
       <div class="grid grid-cols-12">
         <div
           class="col-span-2 xl:flex"

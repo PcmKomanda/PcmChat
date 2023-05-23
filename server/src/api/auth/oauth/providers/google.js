@@ -39,7 +39,7 @@ router.get('/callback', async (req, res) => {
   const user_data = await GetUserData(access_token);
 
   const token = await LoginToUser(user_data);
-  return res.json(token).status(token.status);
+  return res.status(token.status).json(token);
 });
 
 async function GetAccessToken(code) {
@@ -65,7 +65,7 @@ async function GetUserData() {
 }
 
 async function LoginToUser(user) {
-  // console.log(user);
+  console.log(user);
   const userFromDB = await User.findOne({
     provider_id: String(user.id),
     provider: 'google',
@@ -90,7 +90,5 @@ async function LoginToUser(user) {
   });
   return { token, status: 200 };
 }
-
-module.exports = router;
 
 module.exports = router;

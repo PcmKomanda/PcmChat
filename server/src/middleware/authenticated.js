@@ -25,7 +25,9 @@ const isAuthenticated = async (req, res, next) => {
   const { id } = jwt.decode(token);
   const user = await User.findOne({
     _id: id,
-  }).populate(guilds ? 'guilds' : '');
+  })
+    .select(['-password'])
+    .populate(guilds ? 'guilds' : '');
   if (!user._id) return UnauthorizedError(res);
   req.user = user;
   if (user) next();
