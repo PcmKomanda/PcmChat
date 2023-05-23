@@ -5,6 +5,10 @@ import vue from "@vitejs/plugin-vue";
 export default defineConfig({
   server: {
     port: 8888,
+    strictPort: true,
+    hmr: {
+  
+    }
   },
   build: {
     outDir: "../server/public",

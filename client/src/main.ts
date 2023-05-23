@@ -11,7 +11,7 @@ const app = createApp(App)
   .use(
     new VueSocketIO({
       debug: true,
-      connection: `ws://${import.meta.env.VITE_API}`,
+      connection: `wss://${import.meta.env.VITE_API}`,
       vuex: {
         store,
         actionPrefix: "SOCKET_",

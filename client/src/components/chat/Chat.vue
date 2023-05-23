@@ -27,7 +27,7 @@ export default {
         class="flex"
       />
     </div>
-    <div class="hidden lg:flex col-span-3">
+    <div class="hidden lg:flex col-span-3 ">
       <MembersList />
     </div>
   </div>
