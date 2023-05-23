@@ -20,14 +20,14 @@ export default {
 </script>
 <template>
   <div class="h-screen grid grid-cols-12">
-    <div class="col-span-12 lg:col-span-9">
+    <div class="col-span-12 lg:col-span-9 h-screen">
       <Messages
         @openSidebar="this.$emit('openSidebar')"
         :channel_id="channel._id"
         class="flex"
       />
     </div>
-    <div class="hidden lg:flex col-span-3 ">
+    <div class="hidden lg:flex col-span-3 h-screen">
       <MembersList />
     </div>
   </div>

@@ -39,7 +39,7 @@ export default {
 };
 </script>
 <template>
-  <div class="flex flex-col w-full max-h-screen m-0 p-0">
+  <div class="flex flex-col w-full h-screen m-0 p-0">
     <div class="flex-grow inline-flex overflow-auto">
       <GuildsList></GuildsList>
       <div class="flex flex-col w-full overflow-hidden bg-base-200">

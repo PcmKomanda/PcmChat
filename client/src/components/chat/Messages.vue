@@ -85,9 +85,9 @@ export default {
     },
   },
   mounted() {
-    this.date = Date.now();
     this.$store.dispatch("getChannel");
     if (this.channel._id) {
+      this.date = Date.now();
       this.loadMessages();
       this.$nextTick(() => this.scrollToEnd());
     }
@@ -96,6 +96,7 @@ export default {
       () => this.channel._id,
       () => {
         this.messages = [];
+        this.date = Date.now();
         this.loadMessages();
         this.$nextTick(() => this.scrollToEnd());
       }
@@ -105,7 +106,7 @@ export default {
 </script>
 <template>
   <div class="flex flex-col w-full m-0 p-0 h-full">
-    <div class="bg-base-300 w-full h-12 border-b-2 flex">
+    <div class="bg-base-300 w-full min-h-[48px] border-b-2 flex">
       <i
         class="fas fa-bars text-3xl mx-2 sm:inline-flex xl:hidden my-auto"
         @click="this.$emit('openSidebar')"

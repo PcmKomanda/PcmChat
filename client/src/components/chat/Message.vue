@@ -48,9 +48,9 @@ export default {
           >{{ message.author.display_name }}</span
         >
         <span class="text-sm my-auto">{{ formatTime(message.createdAt) }}</span>
-        <span class="text-sm my-auto text-gray-500" v-if="message.edited"
-          >(Keista)</span
-        >
+        <span class="text-sm my-auto text-gray-500" v-if="message.edited">
+          (Keista)
+        </span>
       </div>
       <div class="break-normal">{{ message.content }}</div>
     </div>

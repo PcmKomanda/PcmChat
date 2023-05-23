@@ -51,8 +51,8 @@ export default {
 };
 </script>
 <template>
-  <div class="h-full w-full">
-    <div class="w-full h-12 border-b-2 bg-base-300"></div>
+  <div class="h-screen w-full">
+    <div class="w-full min-h-[48px] border-b-2 bg-base-300"></div>
     <div class="flex w-full h-full flex-row p-2 overflow-y-scroll bg-base-200">
       <div class="flex-grow" v-if="this.guild._id">
         <div

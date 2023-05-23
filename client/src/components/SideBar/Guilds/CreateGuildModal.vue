@@ -167,7 +167,7 @@ export default {
         </div>
       </div>
       <div class="modal-action">
-        <div class="flex w-full" v-if="tab == 'join'">
+        <div class="flex flex-col md:flex-row w-full" v-if="tab == 'join'">
           <a
             class="btn"
             @click="setTab('create')"
@@ -176,15 +176,19 @@ export default {
             Kurti savo gildiją
           </a>
           <a
-            class="btn ml-auto"
+            class="btn md:ml-auto mt-2 md:mt-0"
             @click="join"
             :class="loading ? 'loading btn-disabled' : ''"
           >
             Prisijungti!
           </a>
         </div>
-        <div class="flex w-full" v-if="tab == 'create'">
-          <a class="btn mr-auto" @click="setTab('join')" v-if="tab == 'create'">
+        <div class="flex flex-col md:flex-row w-full" v-if="tab == 'create'">
+          <a
+            class="btn md:mr-auto mb-2 md:mb-0"
+            @click="setTab('join')"
+            v-if="tab == 'create'"
+          >
             Prisijungti prie esamos gildijos
           </a>
           <a
