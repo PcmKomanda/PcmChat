@@ -5,6 +5,16 @@ const StrReq = {
   required: true,
 };
 
+const Status = new mongoose.Schema({
+  type: {
+    type: String,
+    default: 'online',
+    enum: ['online', 'idle', 'dnd', 'invisible', 'offline'],
+  },
+  online: Boolean,
+  last_seen: Date,
+});
+
 const User = new mongoose.Schema(
   {
     provider_id: StrReq,
@@ -37,6 +47,14 @@ const User = new mongoose.Schema(
         ref: 'Guild',
       },
     ],
+    status: {
+      type: Status,
+      default: {
+        type: 'online',
+        online: true,
+        last_seen: Date.now(),
+      },
+    },
   },
   {
     timestamps: true,

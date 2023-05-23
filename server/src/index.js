@@ -4,58 +4,88 @@ const app = express();
 const http = require('http');
 const cors = require('cors');
 const morgan = require('morgan');
-const db = require('./db/db');
+require('./db/db');
 const server = http.createServer(app);
 const { Server } = require('socket.io');
 const Message = require('./db/models/Message');
+
+const chalk = require('chalk');
+
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:5173',
+    origin: true,
     credentials: true,
     methods: ['GET', 'POST'],
   },
   allowEIO3: true,
 });
 
-app.use(
-  cors({
-    origin: 'http://localhost:5173',
-    credentials: true,
-  })
-);
-app.use(morgan('dev'));
+app.use(cors({ credentials: true, origin: true }));
+
+const morganMiddleware = morgan(function (tokens, req, res) {
+  return [
+    '\n',
+    chalk.hex('#34ace0').bold(tokens.method(req, res)),
+    chalk.hex('#ffb142').bold(tokens.status(req, res)),
+    chalk.hex('#ff5252').bold(tokens.url(req, res)),
+    chalk.hex('#2ed573').bold(tokens['response-time'](req, res) + ' ms'),
+    chalk.hex('#f78fb3').bold('@ ' + tokens.date(req, res)),
+    chalk.yellow(tokens['remote-addr'](req, res)),
+    chalk.hex('#fffa65').bold('from ' + tokens.referrer(req, res)),
+    chalk.hex('#1e90ff')(tokens['user-agent'](req, res)),
+  ].join(' ');
+});
+
+app.use(morganMiddleware);
+
 app.use(express.json());
+
+// const corsOptions = {
+//   origin:
+//     ip.address() == '192.168.0.166'
+//       ? 'http://localhost:8888'
+//       : process.env.PUBLIC,
+//   credentials: true,
+// };
+// app.options('*', cors(corsOptions));
 
 app.use('/api', require('./api/api'));
 
-let online = new Set();
-
-io.on('connection', (socket) => {
-  socket.on('newUser', async (payload) => {
-    online.add(payload);
-    socket.emit('setOnline', online.size);
-    socket.emit('setMessages', await getMessages());
-  });
+io.on('connection', async (socket) => {
   socket.on('newMessage', async (payload) => {
-    console.log(payload);
-    const message = await (await Message.create(payload)).populate('author');
-    io.emit('newMessage', message);
-    socket.broadcast.emit('newMessage', message);
+    const message = await Message.findOne({
+      _id: payload.message._id,
+    }).populate('author');
+    if (payload.channel._id == message.channel) {
+      io.emit(`newMessage`, message);
+    }
+  });
+
+  socket.on('editMessage', async (payload) => {
+    const message = await Message.findOne({
+      _id: payload,
+    }).populate('author');
+
+    io.emit(`editMessage`, message);
+  });
+
+  socket.on('deleteMessage', async (payload) => {
+    io.emit(`messageDeleted`, payload);
+  });
+
+  socket.on('updateGuild', async (payload) => {
+    io.emit('updateGuild', payload);
+  });
+
+  socket.on('updateGuildIcon', async () => {
+    io.emit('updateGuildIcon');
+  });
+
+  socket.on('userStatusChanged', () => {
+    io.emit('userStatusChanged');
   });
 });
 
-io.sockets.on('connection', function (socket) {
-  socket.on('disconnect', function () {
-    online = new Set([...online].filter((u) => u.socket_id !== socket.id));
-    socket.broadcast.emit('setOnline', online.size);
-  });
-});
-
-async function getMessages() {
-  const messages = await Message.find().populate('author');
-  return messages;
-}
-
-server.listen(3000, () => {
-  console.log('listening on *:3000');
+server.listen(process.env.PORT, () => {
+  console.log(`listening on *:${process.env.PORT}`);
 });

@@ -1,14 +1,15 @@
 <script>
-export default {
-
-}
+export default {};
 </script>
 
 <template>
-  <div>
+  <div class="p-0">
     <router-view :key="$route.path" />
   </div>
 </template>
 
-<style scoped>
+<style>
+body {
+  padding: 0;
+}
 </style>

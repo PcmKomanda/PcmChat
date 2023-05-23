@@ -10,6 +10,8 @@ router.get('/', (req, res) => {
 
 router.use('/users', require('./users'));
 router.use('/guilds', require('./guilds/guilds'));
+router.use('/messages', require('./messages/messages'));
+router.use('/channels', require('./channels/channels'));
 router.use('/auth', require('./auth/auth'));
 
 module.exports = router;

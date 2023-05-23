@@ -32,7 +32,6 @@ router.get('/callback', async (req, res, next) => {
   // if (!user?.id) return res.json({ error: 'Code is invalid' }).status(400);
   const token = await LoginToUser(user);
 
-  console.log(token);
   res.json(token).status(token.status);
 });
 
@@ -88,7 +87,6 @@ async function LoginToUser(user) {
     });
     return { token, status: 200 };
   }
-  console.log(user);
   const newUser = await User.create({
     provider_id: user.id,
     provider: 'discord',

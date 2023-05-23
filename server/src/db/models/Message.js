@@ -14,16 +14,21 @@ const Message = new Schema(
       ref: 'User',
       required: true,
     },
-    // channel: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: 'Channel',
-    //   required: true,
-    // },
+    channel: {
+      type: Schema.Types.ObjectId,
+      ref: 'Channel',
+      required: false,
+    },
+    edited: {
+      type: Boolean,
+      default: false,
+    },
+    editedAt: {
+      type: Date,
+      default: null,
+    },
   },
-  {
-    timestamps: true,
-    versionKey: false,
-  }
+  { timestamps: true, versionKey: false }
 );
 
 module.exports = mongoose.model('Message', Message);

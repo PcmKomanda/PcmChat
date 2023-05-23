@@ -11,28 +11,24 @@ const isAdmin = async (req, res, next) => {
       _id: id,
     },
   });
-  console.log(user);
   if (!user || user.role !== 'admin') return UnauthorizedError(res);
   next();
 };
 
 const isAuthenticated = async (req, res, next) => {
+  const { guilds } = req.query;
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) return UnauthorizedError(res);
-  jwt.verify(token, JWT_SECRET, (err, decoded) => {
-    if (err) {
-      return UnauthorizedError(res);
-    }
-  });
+  const isValid = await jwt.verify(token, JWT_SECRET, (err) => !err);
+  if (!isValid) return UnauthorizedError(res);
 
   const { id } = jwt.decode(token);
   const user = await User.findOne({
     _id: id,
-  }).select(['-password']);
-  console.log(user);
-  if (!user) return UnauthorizedError(res);
+  }).populate(guilds ? 'guilds' : '');
+  if (!user._id) return UnauthorizedError(res);
   req.user = user;
-  next();
+  if (user) next();
 };
 
 function UnauthorizedError(res) {

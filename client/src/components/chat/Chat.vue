@@ -1,30 +1,34 @@
 <script>
-import Messages from './Messages.vue';
-import Editor from './Editor.vue';
+import Messages from "./Messages.vue";
+import Editor from "./Editor.vue";
+import MembersList from "./MembersList.vue";
 export default {
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
-    room: {
-      type: Number,
-      required: true,
-    },
-  },
+  inheritAttrs: false,
   data() {
-    return {
-    }
+    return {};
   },
-  components: { Messages, Editor },
-}
+  computed: {
+    user() {
+      return this.$store.state.user;
+    },
+    channel() {
+      return this.$store.state.channel;
+    },
+  },
+  components: { Messages, Editor, MembersList },
+};
 </script>
 <template>
-
-    <div class="w-full bg-base-200 p-2 border-b-2">
-      <span class="text-4xl"># <i>Pagrindinis</i></span>
+  <div class="h-screen grid grid-cols-12">
+    <div class="col-span-12 lg:col-span-9">
+      <Messages
+        @openSidebar="this.$emit('openSidebar')"
+        :channel_id="channel._id"
+        class="flex"
+      />
     </div>
-    <div class="h-screen">
-      <Messages :user="user" class/>
+    <div class="hidden lg:flex col-span-3">
+      <MembersList />
     </div>
+  </div>
 </template>

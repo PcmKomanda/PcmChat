@@ -11,3 +11,63 @@
 body {
   font-family: "Anonymous Pro", monospace;
 }
+
+.avatar.status::before {
+  content: "";
+  position: absolute;
+  z-index: 10;
+  display: block;
+  border-radius: 9999px;
+  --tw-bg-opacity: 1;
+  width: 25%;
+  height: 25%;
+  top: 7%;
+  right: 7%;
+  box-shadow: 0 0 0 2px hsl(var(--b1));
+}
+
+.status.online::before {
+  background-color: hsl(158 64% 52%);
+}
+
+.status.idle::before {
+  background-color: hsl(46 100% 50%);
+}
+
+.status.dnd::before {
+  background-color: hsl(0 100% 50%);
+}
+
+.status.invis::before {
+  background-color: hsl(0 0% 50%);
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  --tw-bg-opacity: 1;
+  background: hsl(var(--n));
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--nf));
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: black;
+}
+
+.guilds-list {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+.guilds-list::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}

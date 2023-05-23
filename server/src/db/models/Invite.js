@@ -1,24 +1,27 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const DM = new Schema(
+const Invite = new Schema(
   {
-    user_1: {
+    guild: {
+      type: Schema.Types.ObjectId,
+      ref: 'Guild',
+      required: true,
+    },
+    code: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    uses: {
+      type: Number,
+      default: 0,
+    },
+    created_by: {
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
     },
-    user_2: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-    },
-    messages: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Message',
-      },
-    ],
   },
   {
     timestamps: true,
@@ -26,4 +29,4 @@ const DM = new Schema(
   }
 );
 
-module.exports = mongoose.model('DM', DM);
+module.exports = mongoose.model('Invite', Invite);
