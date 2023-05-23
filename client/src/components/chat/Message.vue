@@ -25,12 +25,9 @@ export default {
 <template>
   <div class="chat-message my-2 flex overflow-hidden">
     <div class="avatar min-h-fit min-w-fit">
-      <div
-        class="max-w-[4rem] max-h-[4rem] m-1 rounded-full"
-        v-lazy-container="{ selector: 'img' }"
-      >
+      <div class="max-w-[4rem] max-h-[4rem] m-1 rounded-full">
         <img
-          :data-src="message.author.avatar"
+          :src="message.author.avatar"
           class="select-none"
           draggable="false"
         />

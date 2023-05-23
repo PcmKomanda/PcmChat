@@ -29,11 +29,6 @@ export default {
         });
     },
   },
-  sockets: {
-    userStatusChanged() {
-      this.loadMembers();
-    },
-  },
   mounted() {
     this.loadMembers();
     setInterval(() => {
@@ -47,6 +42,14 @@ export default {
         this.loadMembers();
       }
     );
+  },
+  sockets: {
+    userStatusChanged() {
+      setTimeout(() => {
+        console.log("user status changed");
+        this.loadMembers();
+      }, 500);
+    },
   },
 };
 </script>

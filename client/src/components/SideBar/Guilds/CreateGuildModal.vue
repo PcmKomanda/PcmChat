@@ -35,10 +35,18 @@ export default {
         .post("/guilds/join", {
           code: this.code,
         })
-        .then((r) => {
+        .then(async (r) => {
           this.loading = false;
-          this.$store.dispatch("getGuilds");
-          this.$emit("close");
+          await this.$socket.emit("updateGuildIcon");
+          await this.$store.dispatch("getGuilds");
+          await sessionStorage.setItem("guild", r.data.guild._id);
+          await sessionStorage.setItem("channel", r.data.guild.default_channel);
+          await this.$store.dispatch("getGuild", r.data.guild._id);
+          await this.$store.dispatch("getChannel");
+
+          await setTimeout(() => {
+            this.$emit("close");
+          }, 1000);
         })
         .catch((err) => {
           console.log(err);
@@ -72,6 +80,7 @@ export default {
         .then((r) => {
           this.loading = false;
           this.$store.dispatch("getGuilds");
+
           setTimeout(() => {
             this.$emit("close");
           }, 1000);

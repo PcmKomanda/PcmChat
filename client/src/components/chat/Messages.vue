@@ -13,6 +13,7 @@ export default {
       messages: [],
       date: null,
       message: {},
+      last_message: null,
     };
   },
   computed: {
@@ -22,12 +23,22 @@ export default {
     user() {
       return this.$store.state.user;
     },
+    guild() {
+      return this.$store.state.guild;
+    },
   },
   methods: {
     scrollToEnd: function () {
-      // scroll to the start of the last message
-      this.$refs.messages.scrollTop =
-        this.$refs.messages.lastElementChild.offsetTop;
+      this.$nextTick(() => {
+        if (this.$refs.msg?.length > 1) {
+          const last_msg = this.$refs.msg[this.$refs.msg?.length - 1];
+          last_msg.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "nearest",
+          });
+        }
+      });
     },
     async loadMessages(page) {
       if (!this.channel._id) return;
@@ -42,6 +53,7 @@ export default {
             r.content = checkText(r.content);
             return r;
           });
+          this.scrollToEnd();
         });
     },
     async deleteMessage(e) {
@@ -51,7 +63,6 @@ export default {
       });
     },
     updateMessage(e, is_uid = true) {
-      // hacky way to trigger component update
       const random_uid = uid(16);
       return (this.message = { ...e, uid: is_uid ? random_uid : undefined });
     },
@@ -61,13 +72,10 @@ export default {
       if (e.channel !== this.channel._id) return;
       e.content = checkText(e.content);
       this.messages.push(e);
-    },
-    setMessages(e) {
-      this.messages = e.map((message) => {
-        message.content = checkText(message.content);
-        return message;
-      });
-      this.$nextTick(() => this.scrollToEnd());
+
+      setTimeout(() => {
+        this.scrollToEnd();
+      }, 500);
     },
     editMessage(e) {
       if (e.channel !== this.channel._id) return;
@@ -89,7 +97,6 @@ export default {
     if (this.channel._id) {
       this.date = Date.now();
       this.loadMessages();
-      this.$nextTick(() => this.scrollToEnd());
     }
 
     this.$watch(
@@ -98,7 +105,6 @@ export default {
         this.messages = [];
         this.date = Date.now();
         this.loadMessages();
-        this.$nextTick(() => this.scrollToEnd());
       }
     );
   },
@@ -120,22 +126,23 @@ export default {
         </span>
       </div>
     </div>
-    <div
-      class="flex-grow w-full overflow-y-auto"
-      v-if="channel._id"
-      ref="messages"
-    >
+    <div class="flex-grow w-full overflow-y-scroll relative" v-if="channel._id">
       <span class="m-2" v-if="messages.length < 1">Žinučių nėra.</span>
       <div
         v-else
         v-for="message in messages"
         :key="message._id"
+        ref="msg"
         class="hover:bg-base-300 duration-200 my-1 relative flex w-full"
       >
         <Message :message="message" v-if="message.author" />
         <div
           class="flex gap-2 text-lg absolute right-1 top-2"
-          v-if="user._id === message.author._id"
+          v-if="
+            user._id === message.author._id ||
+            guild.owner === user._id ||
+            guild.moderators.includes(user._id)
+          "
         >
           <i
             class="fas fa-edit hover:text-warning duration-500 cursor-pointer"
