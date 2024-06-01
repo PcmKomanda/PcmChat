@@ -17,8 +17,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/public/index.html",
-      "status": 200
+      "dest": "/public/**/*"
     }
   ]
 }
