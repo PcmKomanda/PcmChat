@@ -89,3 +89,5 @@ io.on('connection', async (socket) => {
 server.listen(process.env.PORT, () => {
   console.log(`listening on *:${process.env.PORT}`);
 });
+
+module.exports = app;
