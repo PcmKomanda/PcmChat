@@ -12,7 +12,7 @@
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/src/index.js" },
-    { "src": "/socket.io", "dest": "/src/index.js" },
+    { "src": "/socket.io/(.*)", "dest": "/src/index.js" },
     {
       "handle": "filesystem"
     },
