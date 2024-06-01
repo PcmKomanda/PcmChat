@@ -17,11 +17,6 @@ export default {
     },
   },
   methods: {
-    loadModal(e) {
-      if (e === "settings") {
-        this.settings = true;
-      }
-    },
     async ping() {
       await api
         .post(
@@ -47,18 +42,13 @@ export default {
   async mounted() {
     await this.$store.dispatch("getUser");
 
-    this.ping();
+    await this.ping();
     this.pingInterval = setInterval(() => {
       this.ping();
     }, 10000);
   },
   beforeUnmount() {
     clearInterval(this.pingInterval);
-  },
-  sockets: {
-    connect: function () {
-      console.log("socket to notification channel connected");
-    },
   },
 };
 </script>

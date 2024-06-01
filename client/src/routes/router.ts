@@ -1,11 +1,7 @@
 import { VueCookies } from "vue-cookies";
-import Vue from "vue";
-import {
-  NavigationGuardNext,
-  RouteLocationNormalized,
-  createRouter,
-  createWebHistory,
-} from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
+
+import type { NavigationGuardNext, RouteLocationNormalized } from "vue-router";
 
 type RLN = RouteLocationNormalized;
 type NGN = NavigationGuardNext;
