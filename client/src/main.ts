@@ -1,18 +1,18 @@
 import { createApp } from "vue";
-import "./main.css";
-import App from "./App.vue";
 import VueSocketIO from "vue-3-socket.io";
-import store from "./store/store";
 import VueCookies from "vue-cookies";
-import router from "./routes/router";
 import VueLazyload from "vue-lazyload";
+import App from "./App.vue";
+import "./main.css";
+import router from "./routes/router";
+import store from "./store/store";
 
 const app = createApp(App)
   .use(
     new VueSocketIO({
       debug: true,
       connection: `${
-        import.meta.env.NODE_ENV === "production" ? "wss" : "ws"
+        import.meta.env.NODE_ENV === "production" ? "https" : "http"
       }://${import.meta.env.VITE_API}`,
       vuex: {
         store,
