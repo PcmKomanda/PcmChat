@@ -12,7 +12,7 @@ const app = createApp(App)
     new VueSocketIO({
       debug: true,
       connection: `${
-        import.meta.env.NODE_ENV === "production" ? "https" : "http"
+        import.meta.env.VITE_NODE_ENV === "production" ? "https" : "http"
       }://${import.meta.env.VITE_API}`,
       vuex: {
         store,
