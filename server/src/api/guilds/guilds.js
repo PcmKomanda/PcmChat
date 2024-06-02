@@ -142,32 +142,35 @@ router.put('/:guild_id', isAuthenticated, async (req, res) => {
 router.put('/:guild_id/icon', upload.single('icon'), async (req, res) => {
   const { guild_id } = req.params;
   const file = req.file;
-  let cld_upload_stream = cloudinary.uploader.upload_stream(
-    {
-      resource_type: 'image',
-      folder: 'guilds',
-      filename_override: guild_id,
-      public_id: guild_id,
-      format: 'webp',
-      width: 256,
-      height: 256,
-      crop: 'fill',
-    },
-    async (err, result) => {
-      if (err) return res.json({ message: err, status: 500 }).status(500);
+  try {
+    let cld_upload_stream = cloudinary.uploader.upload_stream(
+      {
+        resource_type: 'image',
+        folder: 'guilds',
+        filename_override: guild_id,
+        public_id: guild_id,
+        format: 'webp',
+        width: 256,
+        height: 256,
+        crop: 'fill',
+      },
+      async (err, result) => {
+        if (err) return res.json({ message: err, status: 500 }).status(500);
 
-      await Guild.findOneAndUpdate(
-        { _id: guild_id },
-        { icon: result.url },
-        { new: true }
-      );
+        await Guild.findOneAndUpdate(
+          { _id: guild_id },
+          { icon: result.url },
+          { new: true }
+        );
+        return res.send(result);
+      }
+    );
 
-      return res.send(result);
-    }
-  );
-
-  const str = Readable.from(file.buffer);
-  str.pipe(cld_upload_stream);
+    const str = Readable.from(file.buffer);
+    str.pipe(cld_upload_stream);
+  } catch (error) {
+    return res.json({ message: error.message, status: 500 }).status(500);
+  }
 });
 
 router.put('/:guild_id/join', isAuthenticated, async (req, res) => {

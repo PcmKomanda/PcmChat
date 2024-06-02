@@ -49,10 +49,12 @@ export default {
           }&date=${this.date}`
         )
         .then((r) => {
-          this.messages = r.data.data.map((r) => {
-            r.content = checkText(r.content);
-            return r;
-          });
+          this.messages = r.data.data
+            .map((r) => {
+              r.content = checkText(r.content);
+              return r;
+            })
+            .filter((a) => a.author);
           this.scrollToEnd();
         });
     },

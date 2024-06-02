@@ -10,6 +10,7 @@ const { Server } = require('socket.io');
 const Message = require('./db/models/Message');
 
 const chalk = require('chalk');
+const path = require('path');
 
 const io = new Server(server, {
   cors: {
@@ -48,8 +49,12 @@ app.use(express.json());
 //   credentials: true,
 // };
 // app.options('*', cors(corsOptions));
-
+app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use('/api', require('./api/api'));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/index.html'));
+});
 
 io.on('connection', async (socket) => {
   socket.on('newMessage', async (payload) => {
