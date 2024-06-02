@@ -75,4 +75,4 @@ Demo is no longer available. It's been already a year and my GitHub student perk
 
 ## Screenshots
 
-You can find screenshots from website [here](https://github.com/pcmkomanda/PcmChat/screenshots)
+You can find screenshots from website [here](https://github.com/PcmKomanda/PcmChat/tree/master/screenshots)
