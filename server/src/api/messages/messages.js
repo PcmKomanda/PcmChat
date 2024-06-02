@@ -61,7 +61,7 @@ router.delete('/:message_id', isAuthenticated, async (req, res) => {
       },
     });
   }
-  await message.delete();
+  await message.deleteOne();
   return res.json({ message: 'Message has been deleted.', status: 200 });
 });
 module.exports = router;

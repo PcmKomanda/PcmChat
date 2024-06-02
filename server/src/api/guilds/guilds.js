@@ -311,7 +311,7 @@ router.delete('/:guild_id', isAuthenticated, async (req, res) => {
     { $pull: { guilds: guild._id } }
   );
 
-  await guild.delete();
+  await guild.deleteOne();
 
   return res.json({ guild }).status(200);
 });
