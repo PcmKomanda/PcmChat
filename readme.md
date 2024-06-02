@@ -1,13 +1,13 @@
 # About this project
-In high school we had yearly project and this project is exactly that. I did this in 2023. It's chat app. Something like discord, but with a lot less features. Only language available is Lithuanian. When I developed this app, I didn't had any reason to add any other language.
+In high school, we had a yearly project and this project is exactly that. I did this in 2023. It's a chat app, something like Discord, but with fewer features. The only language available is Lithuanian. I had no reason to add another language when I developed this app.
 
 
 ## Features
 
 - Login with third party services(Discord, Google, GitHub)
-- Create guilds like in Discord, add text channels.
-- Generate invite code, which you send to other user.
-- Join guilds with invite code.
+- Create guilds like in Discord, and add text channels.
+- Generate an invite code, which you send to other users.
+- Join guilds with an invite code.
 - Send, edit or delete messages.
 - See who is online.
 - Delete guilds.
@@ -52,8 +52,8 @@ cd ../server
 yarn
 ```
 
-**Copy .env.sample and fill it with you information.**\
-*Cloudinary is optional, but then you can't add guild icon.*
+**Copy .env.sample and fill it with your information.**\
+*Cloudinary is optional, but you can't add a guild icon.*
 ```bash
 cp .env.sample .env
 nano .env
@@ -65,7 +65,7 @@ yarn start
 ```
 ## Demo
 
-Demo is no longer available. It's been already a year and my GitHub student perks doesn't cover it anymore. 
+The demo is no longer available. It's already been a year and my GitHub student perks no longer cover it. 
 
 
 ## Authors
@@ -75,4 +75,4 @@ Demo is no longer available. It's been already a year and my GitHub student perk
 
 ## Screenshots
 
-You can find screenshots from website [here](https://github.com/pcmkomanda/PcmChat/screenshots)
+You can find screenshots from the website [here](https://github.com/PcmKomanda/PcmChat/tree/master/screenshots)
