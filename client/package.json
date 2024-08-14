@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@vueform/multiselect": "^2.6.2",
-    "axios": "^1.4.0",
+    "axios": "^1.7.4",
     "daisyui": "^2.51.5",
     "emoji-js": "^3.7.0",
     "js-cookie": "^3.0.5",
