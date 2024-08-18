@@ -53,7 +53,7 @@ yarn
 ```
 
 **Copy .env.sample and fill it with your information.**\
-*Cloudinary is optional, but you can't add a guild icon.*
+*Cloudinary is optional, but you won't be able to add images*
 ```bash
 cp .env.sample .env
 nano .env
