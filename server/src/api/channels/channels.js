@@ -1,22 +1,22 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Channel = require('../../db/models/Channel');
-const { isAuthenticated } = require('../../middleware/authenticated');
-const Message = require('../../db/models/Message');
+const Channel = require("../../db/models/Channel");
+const { isAuthenticated } = require("../../middleware/authenticated");
+const Message = require("../../db/models/Message");
 
 router.get(`/:channel_id`, isAuthenticated, async (req, res) => {
   const { channel_id } = req.params;
 
-  if (channel_id == 'undefined') return;
+  if (channel_id == "undefined") return;
 
   const channel = await Channel.findOne({ _id: channel_id });
 
-  if (!channel) return res.status(404).json({ error: 'Kanalas nerastas' });
+  if (!channel) return res.status(404).json({ error: "Kanalas nerastas" });
 
   return res.status(200).json({ data: channel, status: 200 });
 });
 
-router.get('/:channel_id/messages', isAuthenticated, async (req, res) => {
+router.get("/:channel_id/messages", isAuthenticated, async (req, res) => {
   const { channel_id } = req.params;
   let { limit, page, date } = req.query;
   limit = parseInt(limit) || 500;
@@ -27,12 +27,12 @@ router.get('/:channel_id/messages', isAuthenticated, async (req, res) => {
       channel: channel_id,
       createdAt: { $lte: date },
     })
-      .populate('author', '_id display_name avatar color')
+      .populate("author", "_id display_name avatar color")
       .limit(limit)
       .skip(skip * page)
       .sort({ createdAt: 1 });
 
-    const count = await Message.find({ channel: channel_id }).count();
+    const count = await Message.find({ channel: channel_id }).countDocuments();
     res.status(200).json({
       pagination: {
         total_messages: count,
@@ -49,7 +49,7 @@ router.get('/:channel_id/messages', isAuthenticated, async (req, res) => {
   }
 });
 
-router.post('/:channel_id/messages', isAuthenticated, async (req, res) => {
+router.post("/:channel_id/messages", isAuthenticated, async (req, res) => {
   const { channel_id } = req.params;
   const { content } = req.body;
 
@@ -62,7 +62,7 @@ router.post('/:channel_id/messages', isAuthenticated, async (req, res) => {
   return res.status(200).json({ data: message, status: 200 });
 });
 
-router.put('/:channel_id', isAuthenticated, async (req, res) => {
+router.put("/:channel_id", isAuthenticated, async (req, res) => {
   const { channel_id } = req.params;
   const { title, privacy } = req.body;
 
@@ -79,12 +79,12 @@ router.put('/:channel_id', isAuthenticated, async (req, res) => {
     }
   );
 
-  if (!channel) return res.status(404).json({ error: 'Kanalas nerastas' });
+  if (!channel) return res.status(404).json({ error: "Kanalas nerastas" });
 
   return res.status(200).json({ data: channel, status: 200 });
 });
 
-router.delete('/:channel_id', isAuthenticated, async (req, res) => {
+router.delete("/:channel_id", isAuthenticated, async (req, res) => {
   const { channel_id } = req.params;
 
   await Message.deleteMany({
@@ -95,11 +95,11 @@ router.delete('/:channel_id', isAuthenticated, async (req, res) => {
     _id: channel_id,
   });
 
-  if (!channel) return res.status(404).json({ error: 'Kanalas nerastas' });
+  if (!channel) return res.status(404).json({ error: "Kanalas nerastas" });
 
   return res
     .status(200)
-    .json({ message: 'Kanalas sėkmingai ištrintas.', status: 200 });
+    .json({ message: "Kanalas sėkmingai ištrintas.", status: 200 });
 });
 
 module.exports = router;
