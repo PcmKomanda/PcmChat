@@ -6,12 +6,10 @@ export default defineConfig({
   server: {
     port: 8888,
     strictPort: true,
-    hmr: {
-  
-    }
+    hmr: {},
   },
   build: {
-    outDir: "../server/public",
+    // outDir: "/dist",
     emptyOutDir: true,
   },
   plugins: [vue()],
