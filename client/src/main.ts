@@ -11,9 +11,8 @@ const app = createApp(App)
   .use(
     new VueSocketIO({
       debug: true,
-      connection: `${
-        import.meta.env.VITE_SECURE === true ? "https" : "http"
-      }://${import.meta.env.VITE_API}`,
+      connection: `
+      https://${import.meta.env.VITE_API}`,
       vuex: {
         store,
         actionPrefix: "SOCKET_",
