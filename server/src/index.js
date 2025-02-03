@@ -20,7 +20,7 @@ const io = new Server(server, {
   allowEIO3: true,
 });
 
-app.use(cors({ credentials: true, origin: true }));
+app.use(cors({ credentials: true, origin: [process.env.PUBLIC] }));
 
 // const morganMiddleware = morgan(function (tokens, req, res) {
 //   return [
